@@ -35,7 +35,7 @@ public class GendersEntity {
     @Column(name = "films_asoc")
     private String filmsAsoc;
 
-//    private boolean deleted = Boolean.FALSE;
+    private boolean deleted = Boolean.FALSE;
     
     @ManyToMany( mappedBy = "genders", cascade = CascadeType.ALL)
     private List<FilmsEntity> films = new ArrayList<>();

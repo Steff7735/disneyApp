@@ -38,8 +38,8 @@ public class CharactersEntity {
     @Column(name = "films_asoc")
     private String filmsAsoc;
 
-//    //SOFT DELETE
-//    private boolean deleted = Boolean.FALSE;
+   //SOFT DELETE
+    private boolean deleted = Boolean.FALSE;
     
     @ManyToMany( mappedBy = "characters", cascade = CascadeType.ALL)
     private List<FilmsEntity> films = new ArrayList<>();

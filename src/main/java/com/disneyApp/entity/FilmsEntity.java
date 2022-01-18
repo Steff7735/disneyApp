@@ -43,15 +43,8 @@ public class FilmsEntity {
     @Column(name = "characters_asoc")
     private String charactersAsoc;
 
-//    private boolean deleted = Boolean.FALSE;
-    
-//    @ManyToMany(
-//            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "genders_id", insertable = false, updatable = false)
-//    private GendersEntity gendersEntity;
-//
-//    @Column(name = "genders_id", nullable = false)
-//    private String GendersId;
+   private boolean deleted = Boolean.FALSE;
+
 
      @ManyToMany(
             cascade = {
