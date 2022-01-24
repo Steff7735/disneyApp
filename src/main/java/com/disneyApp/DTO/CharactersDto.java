@@ -1,6 +1,6 @@
 package com.disneyApp.DTO;
 
-import com.disneyApp.entity.FilmsEntity;
+import com.disneyApp.entity.Films;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,5 +23,7 @@ public class CharactersDto {
 
     private String filmsAsoc;
 
-    private List<FilmsEntity> films = new ArrayList<>();
+    private boolean deleted = Boolean.FALSE;
+
+    private List<Films> charactersFilms = new ArrayList<>();
 }

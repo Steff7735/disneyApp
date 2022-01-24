@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,19 +15,23 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 /**
  *
  * @author fanny
  */
 @Entity
-@Table(name = "films")
+@Table(name ="films")
+@SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 @Getter
 @Setter
-public class FilmsEntity {
+public class Films {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String image;
@@ -39,9 +42,6 @@ public class FilmsEntity {
     private LocalDate dateCreation;
 
     private Integer stars;
-    
-    @Column(name = "characters_asoc")
-    private String charactersAsoc;
 
    private boolean deleted = Boolean.FALSE;
 
@@ -56,7 +56,7 @@ public class FilmsEntity {
             joinColumns = @JoinColumn(name = "genders_id"),
             inverseJoinColumns = @JoinColumn(name = "films_id"))
    
-     private List<GendersEntity> genders = new ArrayList<>();
+     private List<Genders> genders = new ArrayList<>();
 
     @ManyToMany(
             cascade = {
@@ -68,5 +68,24 @@ public class FilmsEntity {
             joinColumns = @JoinColumn(name = "films_id"),
             inverseJoinColumns = @JoinColumn(name = "characters_id"))
 
-    private List<CharactersEntity> characters = new ArrayList<>();
+    private List<Characters> characters = new ArrayList<>();
+
+    public void addCharactersToFilms(Characters charactersToBeAdded) {
+        this.characters.add(charactersToBeAdded);
+    }
+
+    public void removeCharactersFromFilms(Characters charactersToBeRemoved) {
+        this.characters.remove(charactersToBeRemoved);
+    }
+
+
+    public void addGendersToFilms(Genders gendersToBeAdded) {
+
+        this.genders.add(gendersToBeAdded);
+    }
+
+    public void removeGendersFromFilms(Genders gendersToBeRemoved) {
+
+        this.genders.remove(gendersToBeRemoved);
+    }
 }

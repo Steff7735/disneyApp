@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,31 +13,40 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 /**
  *
  * @author fanny
  */
 @Entity
-@Table( name = "genders" )
+@Table(name ="characters")
+@SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 @Getter
 @Setter
-public class GendersEntity {
+public class Characters {
 
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    private String nombre;
+    private String name;
 
-    private String imagen;
+    private String age;
+
+    private Integer weight;
+
+    private String history;
 
     @Column(name = "films_asoc")
     private String filmsAsoc;
 
+   //SOFT DELETE
     private boolean deleted = Boolean.FALSE;
     
-    @ManyToMany( mappedBy = "genders", cascade = CascadeType.ALL)
-    private List<FilmsEntity> films = new ArrayList<>();
+    @ManyToMany( mappedBy = "characters", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Films> charactersFilms = new ArrayList<>();
+
 }

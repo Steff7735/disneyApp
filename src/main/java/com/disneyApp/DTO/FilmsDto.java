@@ -1,7 +1,7 @@
 package com.disneyApp.DTO;
 
-import com.disneyApp.entity.CharactersEntity;
-import com.disneyApp.entity.GendersEntity;
+import com.disneyApp.entity.Characters;
+import com.disneyApp.entity.Genders;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +23,7 @@ public class FilmsDto {
 
     private Integer stars;
 
-    private String charactersAsoc;
+    private List<Genders> genders = new ArrayList<>();
 
-    private List<GendersEntity> genders = new ArrayList<>();
-
-    private List<CharactersEntity> characters = new ArrayList<>();
+    private List<Characters> characters = new ArrayList<>();
 }
