@@ -11,31 +11,28 @@ import java.util.List;
 @Component
 public class GendersMapper {
 
-    @Autowired
-    private FilmsMapper filmsMapper;
-
-    public Genders gendersDto2Entity(GendersDto newGenders){
+    public Genders gendersDto2Entity(GendersDto gendersDto) {
         Genders genders = new Genders();
-        genders.setNombre(newGenders.getNombre());
-        genders.setImagen(newGenders.getImagen());
-        genders.setFilmsAsoc(newGenders.getFilmsAsoc());
+        genders.setNombre(gendersDto.getNombre());
+        genders.setImagen(gendersDto.getImagen());
+        genders.setFilmsAsoc(gendersDto.getFilmsAsoc());
         return genders;
 
     }
 
-    public GendersDto genders2Dto(Genders savedGenders, boolean b){
+    public GendersDto genders2Dto(Genders genders, boolean b) {
         GendersDto gendersDto = new GendersDto();
-        gendersDto.setId(savedGenders.getId());
-        gendersDto.setNombre(savedGenders.getNombre());
-        gendersDto.setImagen(savedGenders.getImagen());
-        gendersDto.setFilmsAsoc(savedGenders.getFilmsAsoc());
+        gendersDto.setId(genders.getId());
+        gendersDto.setNombre(genders.getNombre());
+        gendersDto.setImagen(genders.getImagen());
+        gendersDto.setFilmsAsoc(genders.getFilmsAsoc());
         return gendersDto;
     }
 
-    public List<GendersDto> gendersList2DtoList(List<Genders> savedGenders, boolean b){
+    public List<GendersDto> gendersList2DtoList(List<Genders> list, boolean b) {
         List<GendersDto> dtoList = new ArrayList<>();
 
-        for (Genders genders : savedGenders) {
+        for (Genders genders : list) {
             dtoList.add(this.genders2Dto(genders, false));
 
         }

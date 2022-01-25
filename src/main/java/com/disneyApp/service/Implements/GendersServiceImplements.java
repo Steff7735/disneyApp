@@ -20,41 +20,44 @@ public class GendersServiceImplements implements GendersService {
     @Autowired
     private GendersRepository gendersRepository;
 
-    public GendersDto savedNewGenders(GendersDto newGenders){
-        Genders entity = gendersMapper.gendersDto2Entity(newGenders);
-        Genders savedGenders = gendersRepository.save(entity);
+    @Override
+    public GendersDto save(GendersDto gendersDto){
+        Genders genders = gendersMapper.gendersDto2Entity(gendersDto);
+        Genders savedGenders = gendersRepository.save(genders);
         GendersDto resultDto = gendersMapper.genders2Dto(savedGenders,false);
 
         return resultDto;
 
     }
 
-    public List<GendersDto> getAllGenders() {
-        List<Genders> entities = gendersRepository.findAll();
-        List<GendersDto> resultDto = this.gendersMapper.gendersList2DtoList(entities,false);
+    @Override
+    public List<GendersDto> getAll() {
+        List<Genders> genders = gendersRepository.findAll();
+        List<GendersDto> resultDto = this.gendersMapper.gendersList2DtoList(genders,false);
         return resultDto;
     }
 
     @Override
-    public void deletedGendersById(String id) {
+    public void deleteById(String id) {
 
         gendersRepository.deleteById(id);
     }
 
     @Override
-    public GendersDto editGendersById(String id, GendersDto gendersToEdit) {
-        Genders savedGenders = this.handleFindById(id);
+    public GendersDto editById(String id, GendersDto gendersDto) {
+        Genders savedGenders = this.handleById(id);
         savedGenders.setNombre(savedGenders.getNombre());
         savedGenders.setImagen(savedGenders.getImagen());
         savedGenders.setFilmsAsoc(savedGenders.getFilmsAsoc());
-        Genders editedGenders = gendersRepository.save(savedGenders);
+        Genders editedGenders  = gendersRepository.save(savedGenders);
         GendersDto resultDto = gendersMapper.genders2Dto(editedGenders,false);
 
         return resultDto;
 
     }
 
-    public Genders handleFindById(String id) {
+    @Override
+    public Genders handleById(String id) {
         Optional<Genders> found = gendersRepository.findById(id);
         if (!found.isPresent()) {
             throw new NotFound("No Genders for id: " + id);

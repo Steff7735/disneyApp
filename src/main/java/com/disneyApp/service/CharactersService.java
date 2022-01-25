@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface CharactersService {
 
-    CharactersDto save(CharactersDto newCharacters);
+    CharactersDto save(CharactersDto charactersDto);
     
-    List<CharactersDto> getAllCharacters();
+    List<CharactersDto> getAll();
     
-    CharactersDto getCharactersDetails(String id);
+    CharactersDto getDetails(String id);
 
-    CharactersDto editCharactersById(String id, CharactersDto charactersToEdit);
+    CharactersDto editById(String id, CharactersDto charactersDto);
 
-    void deleteCharactersById(String id);
+    void deleteById(String id);
 
     List<CharactersDto> getByFilters(String name, Integer age, List<String> films);
 }

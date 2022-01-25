@@ -1,12 +1,9 @@
 package com.disneyApp.DTO;
 
-import com.disneyApp.entity.Characters;
-import com.disneyApp.entity.Genders;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -23,7 +20,7 @@ public class FilmsDto {
 
     private Integer stars;
 
-    private List<Genders> genders = new ArrayList<>();
+    private List<GendersDto> genders ;
 
-    private List<Characters> characters = new ArrayList<>();
+    private List<CharactersDto> characters;
 }

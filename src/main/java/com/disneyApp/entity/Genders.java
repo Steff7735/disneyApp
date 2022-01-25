@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,6 +42,6 @@ public class Genders {
 
     private boolean deleted = Boolean.FALSE;
     
-    @ManyToMany( mappedBy = "genders", cascade = CascadeType.ALL)
-    private List<Films> films = new ArrayList<>();
+    @ManyToMany( mappedBy = "filmsGenders", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Films> FilmsGenders = new ArrayList<>();
 }

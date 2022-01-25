@@ -10,36 +10,36 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("genders")
+@RequestMapping
+@RestController("genders")
 public class GendersController {
 
     @Autowired
     private GendersService gendersService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<GendersDto>> getAll(){
-        List<GendersDto> genders = this.gendersService.getAllGenders();
+        List<GendersDto> genders = this.gendersService.getAll();
         return ResponseEntity.ok().body(genders);
     }
 
 
-    @PostMapping("/save")
-    public ResponseEntity<GendersDto> save(@RequestBody GendersDto gendersDto){
-        GendersDto gendersSaved = gendersService.savedNewGenders(gendersDto);
+    @PostMapping
+    public ResponseEntity<GendersDto> save (@RequestBody GendersDto genders){
+        GendersDto gendersSaved = gendersService.save(genders);
         return ResponseEntity.status(HttpStatus.CREATED).body(gendersSaved);
 
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<GendersDto> editGenders(@PathVariable String id, @RequestBody GendersDto gendersToEdit){
-        GendersDto editedGenders = gendersService.editGendersById(id, gendersToEdit);
+        GendersDto editedGenders = gendersService.editById(id, gendersToEdit);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedGenders);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable String id){
-        gendersService.deletedGendersById(id);
+        gendersService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

@@ -12,7 +12,6 @@ import com.disneyApp.repository.FilmsRepository;
 import com.disneyApp.repository.specification.FilmsSpecification;
 import com.disneyApp.service.FilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,8 +32,8 @@ public class FilmsServiceImplements implements FilmsService {
     private FilmsSpecification filmsSpecifications;
 
     @Override
-    public FilmsDto savedNewFilms(FilmsDto newFilms){
-        Films entity = filmsMapper.filmsDto2Entity(newFilms);
+    public FilmsDto save(FilmsDto filmsDto){
+        Films entity = filmsMapper.filmsDto2Entity(filmsDto);
         Films SavedFilms = filmsRepository.save(entity);
         FilmsDto resultDto = filmsMapper.films2Dto(SavedFilms, false);
 
@@ -43,67 +42,67 @@ public class FilmsServiceImplements implements FilmsService {
     }
 
     @Override
-    public void addCharactersToFilms(String id, String charactersId) {
-        Films savedFilms = this.handleFindById(id);
-        Characters savedCharacters = charactersService.handleFindById(charactersId);
-        savedFilms.getCharacters().size();
+    public void addCharacters(String id, String charactersId) {
+        Films savedFilms = this.handleById(id);
+        Characters savedCharacters = charactersService.handleById(charactersId);
+        savedFilms.getFilmsCharacters().size();
         savedFilms.addCharactersToFilms(savedCharacters);
         filmsRepository.save(savedFilms);
     }
 
     @Override
-    public void addGendersToFilms(String id, String gendersId) {
-        Films savedFilms = this.handleFindById(id);
-        Genders savedGenders = gendersService.handleFindById(gendersId);
-        savedFilms.getGenders().size();
+    public void addGenders(String id, String gendersId) {
+        Films savedFilms = this.handleById(id);
+        Genders savedGenders = gendersService.handleById(gendersId);
+        savedFilms.getFilmsGenders().size();
         savedFilms.addGendersToFilms(savedGenders);
         filmsRepository.save(savedFilms);
     }
 
 
-    public List<FilmsDto> getAllFilms() {
+    @Override
+    public List<FilmsDto> getAll() {
         List<Films> entities = filmsRepository.findAll();
         List<FilmsDto> resultDto = filmsMapper.filmsList2DtoList(entities, true);
         return resultDto;
     }
 
     @Override
-    public FilmsDto getFilmsDetails(String id) {
-        Films films = this.handleFindById(id);
+    public FilmsDto getDetails(String id) {
+        Films films = this.handleById(id);
         FilmsDto resultDto = filmsMapper.films2Dto(films, true);
         return resultDto;
     }
 
     @Override
-    public void deleteFilmsById(String id) {
+    public void deleteById(String id) {
         filmsRepository.deleteById(id);
 
     }
 
     @Override
-    public FilmsDto editFilmsById(String id, FilmsDto filmsToEdit) {
-        Films savedFilms = this.handleFindById(id);
-        savedFilms.setTitle(filmsToEdit.getTitle());
-        savedFilms.setImage(filmsToEdit.getImage());
-        savedFilms.setStars(filmsToEdit.getStars());
-        savedFilms.setDateCreation(filmsToEdit.getDateCreation());
+    public FilmsDto editById(String id, FilmsDto filmsDto) {
+        Films savedFilms = this.handleById(id);
+        savedFilms.setTitle(filmsDto.getTitle());
+        savedFilms.setImage(filmsDto.getImage());
+        savedFilms.setStars(filmsDto.getStars());
+        savedFilms.setDateCreation(filmsDto.getDateCreation());
         Films editedFilms = filmsRepository.save(savedFilms);
         FilmsDto resultDto = filmsMapper.films2Dto(editedFilms, false);
         return resultDto;
     }
 
     @Override
-    public List<FilmsDto> getByFilters(String name, List<String> genders, Integer order) {
-        FilmsFiltersDto filmsFilters = new FilmsFiltersDto();
-        List<Films> entityList = filmsRepository.findAll((Sort) filmsSpecifications.getFiltered(filmsFilters));
+    public List<FilmsDto> getByFilters(String title, List<String> genders, Integer order) {
+        FilmsFiltersDto filtersDto = new FilmsFiltersDto();
+        List<Films> entityList = filmsRepository.findAll(filmsSpecifications.getFiltered(filtersDto));
         List<FilmsDto> resultDto = filmsMapper.filmsList2DtoList(entityList, true);
         return resultDto;
     }
 
 
-
-    // --- ERROR HANDLING ---
-    public Films handleFindById(String id) {
+    @Override
+    public Films handleById(String id) {
         Optional<Films> toBeFound = filmsRepository.findById(id);
         if(!toBeFound.isPresent()) {
             throw new NotFound("No Film for id: " + id);

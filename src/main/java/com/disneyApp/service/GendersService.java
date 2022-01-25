@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface GendersService {
 
-    GendersDto savedNewGenders(GendersDto newGenders);
+    GendersDto save(GendersDto gendersDto);
 
-    List<GendersDto> getAllGenders();
+    List<GendersDto> getAll();
 
-    void deletedGendersById(String id);
+    void deleteById(String id);
 
-    GendersDto editGendersById(String id, GendersDto gendersToEdit);
+    GendersDto editById(String id, GendersDto gendersDto);
 
-    Genders handleFindById(String id);
+    Genders handleById(String id);
 }

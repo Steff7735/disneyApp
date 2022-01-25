@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,43 +50,43 @@ public class Films {
      @ManyToMany(
             cascade = {
                 CascadeType.PERSIST,
-                CascadeType.MERGE
-            })
+                CascadeType.MERGE,
+            },fetch = FetchType.LAZY)
     @JoinTable(
             name = "genders_films",
             joinColumns = @JoinColumn(name = "genders_id"),
             inverseJoinColumns = @JoinColumn(name = "films_id"))
    
-     private List<Genders> genders = new ArrayList<>();
+     private List<Genders> filmsGenders = new ArrayList<>();
 
     @ManyToMany(
             cascade = {
                 CascadeType.PERSIST,
                 CascadeType.MERGE
-            })
+            },fetch = FetchType.LAZY)
     @JoinTable(
             name = "films_characters",
             joinColumns = @JoinColumn(name = "films_id"),
             inverseJoinColumns = @JoinColumn(name = "characters_id"))
 
-    private List<Characters> characters = new ArrayList<>();
+    private List<Characters> filmsCharacters = new ArrayList<>();
 
     public void addCharactersToFilms(Characters charactersToBeAdded) {
-        this.characters.add(charactersToBeAdded);
+        this.filmsCharacters.add(charactersToBeAdded);
     }
 
     public void removeCharactersFromFilms(Characters charactersToBeRemoved) {
-        this.characters.remove(charactersToBeRemoved);
+        this.filmsCharacters.remove(charactersToBeRemoved);
     }
 
 
     public void addGendersToFilms(Genders gendersToBeAdded) {
 
-        this.genders.add(gendersToBeAdded);
+        this.filmsGenders.add(gendersToBeAdded);
     }
 
     public void removeGendersFromFilms(Genders gendersToBeRemoved) {
 
-        this.genders.remove(gendersToBeRemoved);
+        this.filmsGenders.remove(gendersToBeRemoved);
     }
 }

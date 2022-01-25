@@ -1,25 +1,29 @@
 package com.disneyApp.service;
 
 import com.disneyApp.DTO.FilmsDto;
+import com.disneyApp.entity.Films;
+import com.disneyApp.entity.Genders;
 
 import java.util.List;
 
 public interface FilmsService {
 
-    FilmsDto savedNewFilms(FilmsDto newFilms);
+    FilmsDto save(FilmsDto filmsDto);
 
-    void addCharactersToFilms(String id, String charactersId);
+    void addCharacters(String id, String charactersId);
 
-    void addGendersToFilms(String id, String gendersId);
+    void addGenders(String id, String gendersId);
 
-    List<FilmsDto> getAllFilms();
+    List<FilmsDto> getAll();
 
-    FilmsDto getFilmsDetails(String id);
+    FilmsDto getDetails(String id);
 
-    void deleteFilmsById(String id);
+    void deleteById(String id);
 
-    FilmsDto editFilmsById(String id, FilmsDto filmsToEdit);
+    FilmsDto editById(String id, FilmsDto filmsToEdit);
 
-    List<FilmsDto> getByFilters(String name, List<String> genders, Integer order);
+    List<FilmsDto> getByFilters(String title, List<String> genders, Integer order);
+    
+    Films handleById(String id);
 
 }

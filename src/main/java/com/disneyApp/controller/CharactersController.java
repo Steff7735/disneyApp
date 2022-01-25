@@ -16,43 +16,45 @@ public class CharactersController {
     @Autowired
     private CharactersService charactersService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<CharactersDto>> getAll(){
-        List<CharactersDto> characters = this.charactersService.getAllCharacters();
-        return ResponseEntity.ok().body(characters);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<CharactersDto> getCharactersById(@PathVariable String id) {
-        CharactersDto charactersDetails = charactersService.getCharactersDetails(id);
-        return ResponseEntity.status(HttpStatus.OK).body(charactersDetails);
-    }
-    @PostMapping("/save-characters")
+    @PostMapping
     public ResponseEntity<CharactersDto> save(@RequestBody CharactersDto characters){
         CharactersDto charactersSaved = charactersService.save(characters);
         return ResponseEntity.status(HttpStatus.CREATED).body(charactersSaved);
 
     }
 
+    @GetMapping
+    public ResponseEntity<List<CharactersDto>> getAll(){
+        List<CharactersDto> characters = this.charactersService.getAll();
+        return ResponseEntity.ok().body(characters);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CharactersDto> getById(@PathVariable String id) {
+        CharactersDto characters = charactersService.getDetails(id);
+        return ResponseEntity.status(HttpStatus.OK).body(characters);
+    }
+
+
     @PutMapping("/{id}")
-    public ResponseEntity<CharactersDto> editCharacters(@PathVariable String id, @RequestBody CharactersDto charactersToEdit) {
-        CharactersDto editedCharacters = charactersService.editCharactersById(id, charactersToEdit);
+    public ResponseEntity<CharactersDto> editCharacters(@PathVariable String id, @RequestBody CharactersDto characters) {
+        CharactersDto editedCharacters = charactersService.editById(id, characters);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedCharacters);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable String id) {
-        charactersService.deleteCharactersById(id);
+        charactersService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping
-    public ResponseEntity<List<CharactersDto>> getDetailsByFilters(
+    public ResponseEntity<List<CharactersDto>> getByFilters(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer age,
             @RequestParam(required = false) List<String> films
     ) {
-        List<CharactersDto> charactersList = charactersService.getByFilters(name, age, films);
-        return ResponseEntity.status(HttpStatus.OK).body(charactersList);
+        List<CharactersDto> filteredCharacters = charactersService.getByFilters(name, age, films);
+        return ResponseEntity.status(HttpStatus.OK).body(filteredCharacters);
     }
 }

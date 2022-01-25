@@ -1,10 +1,8 @@
 package com.disneyApp.DTO;
 
-import com.disneyApp.entity.Films;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,5 +17,5 @@ public class GendersDto {
 
     private String filmsAsoc;
 
-    private List<Films> films = new ArrayList<>();
+    private List<FilmsDto> genders;
 }

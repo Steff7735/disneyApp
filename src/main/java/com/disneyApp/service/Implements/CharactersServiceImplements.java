@@ -37,7 +37,7 @@ public class CharactersServiceImplements implements CharactersService {
     }
     
     @Override
-    public List<CharactersDto> getAllCharacters() {
+    public List<CharactersDto> getAll() {
         List<Characters> list = charactersRepository.findAll();
         List<CharactersDto> dtoList = charactersMapper.charactersList2DtoList(list, true);
         return dtoList;
@@ -45,27 +45,27 @@ public class CharactersServiceImplements implements CharactersService {
 
 
    @Override
-   public CharactersDto getCharactersDetails(String id) {
-       Characters detailsCharacters = this.handleFindById(id);
+   public CharactersDto getDetails(String id) {
+       Characters detailsCharacters = this.handleById(id);
        CharactersDto resultDto = charactersMapper.characters2Dto(detailsCharacters, true);
        return resultDto;
    }
    
     @Override
-    public CharactersDto editCharactersById(String id, CharactersDto charactersToEdit) {
-        Characters savedCharacters = this.handleFindById(id);
-        savedCharacters.setName(charactersToEdit.getName());
-        savedCharacters.setAge(charactersToEdit.getAge());
-        savedCharacters.setWeight(charactersToEdit.getWeight());
-        savedCharacters.setHistory(charactersToEdit.getHistory());
-        savedCharacters.setFilmsAsoc(charactersToEdit.getFilmsAsoc());
+    public CharactersDto editById(String id, CharactersDto charactersDto) {
+        Characters savedCharacters = this.handleById(id);
+        savedCharacters.setName(charactersDto.getName());
+        savedCharacters.setAge(charactersDto.getAge());
+        savedCharacters.setWeight(charactersDto.getWeight());
+        savedCharacters.setHistory(charactersDto.getHistory());
+        savedCharacters.setFilmsAsoc(charactersDto.getFilmsAsoc());
         Characters editedCharacters = charactersRepository.save(savedCharacters);
         CharactersDto resultDto = charactersMapper.characters2Dto(editedCharacters, false);
         return resultDto;
     }
 
     @Override
-    public void deleteCharactersById(String id) {
+    public void deleteById(String id) {
 
         charactersRepository.deleteById(id);
     }
@@ -73,13 +73,13 @@ public class CharactersServiceImplements implements CharactersService {
     @Override
     public List<CharactersDto> getByFilters(String name, Integer age, List<String> films) {
         CharactersFiltersDto filtersDto = new CharactersFiltersDto(name, age, films);
-        List<Characters> charactersList = charactersRepository.findAll(charactersSpecifications.getFiltered(filtersDto));
-        List<CharactersDto> charactersDtos = charactersMapper.charactersList2DtoList(charactersList,false);
+        List<Characters> characters = charactersRepository.findAll(charactersSpecifications.getFiltered(filtersDto));
+        List<CharactersDto> charactersDtos = charactersMapper.charactersList2DtoList(characters,false);
         return charactersDtos;
     }
 
    
-    public Characters handleFindById(String id) {
+    public Characters handleById(String id) {
         Optional<Characters> toBeFound = charactersRepository.findById(id);
         if(!toBeFound.isPresent()) {
             throw new NotFound("No Character for id: " + id);

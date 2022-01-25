@@ -46,7 +46,7 @@ public class Characters {
    //SOFT DELETE
     private boolean deleted = Boolean.FALSE;
     
-    @ManyToMany( mappedBy = "characters", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Films> charactersFilms = new ArrayList<>();
+    @ManyToMany( mappedBy = "filmsCharacters", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Films> filmsCharacters = new ArrayList<>();
 
 }
