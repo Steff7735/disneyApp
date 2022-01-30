@@ -1,6 +1,6 @@
 package com.disneyApp.controller;
 
-import com.disneyApp.DTO.CharactersDto;
+import com.disneyApp.Dto.CharactersDto;
 import com.disneyApp.service.CharactersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+
 @RequestMapping("characters")
+@RestController
 public class CharactersController {
 
     @Autowired
@@ -25,20 +26,20 @@ public class CharactersController {
 
     @GetMapping
     public ResponseEntity<List<CharactersDto>> getAll(){
-        List<CharactersDto> characters = this.charactersService.getAll();
-        return ResponseEntity.ok().body(characters);
+        List<CharactersDto> charactersDto = this.charactersService.getAll();
+        return ResponseEntity.ok().body(charactersDto);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CharactersDto> getById(@PathVariable String id) {
-        CharactersDto characters = charactersService.getDetails(id);
-        return ResponseEntity.status(HttpStatus.OK).body(characters);
+        CharactersDto charactersDto = charactersService.getDetails(id);
+        return ResponseEntity.status(HttpStatus.OK).body(charactersDto);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<CharactersDto> editCharacters(@PathVariable String id, @RequestBody CharactersDto characters) {
-        CharactersDto editedCharacters = charactersService.editById(id, characters);
+    public ResponseEntity<CharactersDto> editCharacters(@PathVariable String id, @RequestBody CharactersDto charactersDto) {
+        CharactersDto editedCharacters = charactersService.editById(id, charactersDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedCharacters);
     }
 

@@ -1,9 +1,9 @@
 package com.disneyApp.service.Implements;
 
-import com.disneyApp.DTO.CharactersDto;
-import com.disneyApp.DTO.filters.CharactersFiltersDto;
+import com.disneyApp.Dto.CharactersDto;
+import com.disneyApp.Dto.filters.CharactersFiltersDto;
 import com.disneyApp.entity.Characters;
-import com.disneyApp.exception.NotFound;
+import com.disneyApp.exception.ParamNotFound;
 import com.disneyApp.mapper.CharactersMapper;
 import com.disneyApp.repository.CharactersRepository;
 import com.disneyApp.repository.specification.CharactersSpecification;
@@ -27,10 +27,10 @@ public class CharactersServiceImplements implements CharactersService {
     private CharactersSpecification charactersSpecifications;
 
     @Override
-    public CharactersDto save(CharactersDto newCharacters){
-        Characters entity = charactersMapper.charactersDto2Entity(newCharacters);
-        Characters entitySaved = charactersRepository.save(entity);
-        CharactersDto result = charactersMapper.characters2Dto(entitySaved, true);
+    public CharactersDto save(CharactersDto charactersDto){
+        Characters characters = charactersMapper.charactersDto2Entity(charactersDto);
+        Characters charactersSaved = charactersRepository.save(characters);
+        CharactersDto result = charactersMapper.characters2Dto(charactersSaved, true);
 
         return result;
 
@@ -45,44 +45,44 @@ public class CharactersServiceImplements implements CharactersService {
 
 
    @Override
-   public CharactersDto getDetails(String id) {
-       Characters detailsCharacters = this.handleById(id);
-       CharactersDto resultDto = charactersMapper.characters2Dto(detailsCharacters, true);
+   public CharactersDto getDetails(String charactersId) {
+       Characters characters = this.handleById(charactersId);
+       CharactersDto resultDto = charactersMapper.characters2Dto(characters, true);
        return resultDto;
    }
    
     @Override
-    public CharactersDto editById(String id, CharactersDto charactersDto) {
-        Characters savedCharacters = this.handleById(id);
+    public CharactersDto editById(String charactersId, CharactersDto charactersDto) {
+        Characters savedCharacters = this.handleById(charactersId);
         savedCharacters.setName(charactersDto.getName());
         savedCharacters.setAge(charactersDto.getAge());
         savedCharacters.setWeight(charactersDto.getWeight());
         savedCharacters.setHistory(charactersDto.getHistory());
-        savedCharacters.setFilmsAsoc(charactersDto.getFilmsAsoc());
+        savedCharacters.setFilmsA(charactersDto.getFilmsA());
         Characters editedCharacters = charactersRepository.save(savedCharacters);
         CharactersDto resultDto = charactersMapper.characters2Dto(editedCharacters, false);
         return resultDto;
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(String charactersId) {
 
-        charactersRepository.deleteById(id);
+        charactersRepository.deleteById(charactersId);
     }
 
     @Override
     public List<CharactersDto> getByFilters(String name, Integer age, List<String> films) {
         CharactersFiltersDto filtersDto = new CharactersFiltersDto(name, age, films);
         List<Characters> characters = charactersRepository.findAll(charactersSpecifications.getFiltered(filtersDto));
-        List<CharactersDto> charactersDtos = charactersMapper.charactersList2DtoList(characters,false);
-        return charactersDtos;
+        List<CharactersDto> charactersDto = charactersMapper.charactersList2DtoList(characters,false);
+        return charactersDto;
     }
 
    
-    public Characters handleById(String id) {
-        Optional<Characters> toBeFound = charactersRepository.findById(id);
+    public Characters handleById(String charactersId) {
+        Optional<Characters> toBeFound = charactersRepository.findById(charactersId);
         if(!toBeFound.isPresent()) {
-            throw new NotFound("No Character for id: " + id);
+            throw new ParamNotFound("No Character for charactersId: " + charactersId);
         }
         return toBeFound.get();
     }

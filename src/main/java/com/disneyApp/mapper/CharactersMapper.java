@@ -1,6 +1,6 @@
 package com.disneyApp.mapper;
 
-import com.disneyApp.DTO.CharactersDto;
+import com.disneyApp.Dto.CharactersDto;
 import com.disneyApp.entity.Characters;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class CharactersMapper {
         characters.setAge(charactersDto.getAge());
         characters.setWeight(charactersDto.getWeight());
         characters.setHistory(charactersDto.getHistory());
-        characters.setFilmsAsoc(charactersDto.getFilmsAsoc());
+        characters.setFilmsA(charactersDto.getFilmsA());
         return characters;
 
     }
@@ -27,18 +27,18 @@ public class CharactersMapper {
         charactersDto.setAge(characters.getAge());
         charactersDto.setWeight(characters.getWeight());
         charactersDto.setHistory(characters.getHistory());
-        charactersDto.setFilmsAsoc(characters.getFilmsAsoc());
+        charactersDto.setFilmsA(characters.getFilmsA());
         return charactersDto;
     }
 
     public List<CharactersDto> charactersList2DtoList(List<Characters> list, boolean b) {
-        List<CharactersDto> newList = new ArrayList<>();
+        List<CharactersDto> dtoList = new ArrayList<>();
 
         for (Characters characters : list) {
-            newList.add(this.characters2Dto(characters, true));
-            newList.add(this.characters2Dto(characters, b));
+            dtoList.add(this.characters2Dto(characters, true));
+            dtoList.add(this.characters2Dto(characters, b));
 
         }
-        return newList;
+        return dtoList;
     }
 }

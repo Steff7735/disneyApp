@@ -1,47 +1,35 @@
 package com.disneyApp.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-/**
- *
- * @author fanny
- */
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "genders")
-@SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
-@Where(clause = "deleted = false")
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE genders SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Genders {
-
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    private String nombre;
+    private String name;
 
-    private String imagen;
+    private String image;
 
-    @Column(name = "films_asoc")
-    private String filmsAsoc;
+    @Column(name = "films_A")
+    private String filmsA;
 
     private boolean deleted = Boolean.FALSE;
-    
-    @ManyToMany( mappedBy = "filmsGenders", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Films> FilmsGenders = new ArrayList<>();
+
+    @ManyToMany( mappedBy = "genders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Films> films = new ArrayList<>();
+
 }

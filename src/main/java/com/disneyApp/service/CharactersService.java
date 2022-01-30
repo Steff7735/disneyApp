@@ -1,6 +1,6 @@
 package com.disneyApp.service;
 
-import com.disneyApp.DTO.CharactersDto;
+import com.disneyApp.Dto.CharactersDto;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ public interface CharactersService {
     
     List<CharactersDto> getAll();
     
-    CharactersDto getDetails(String id);
+    CharactersDto getDetails(String charactersId);
 
-    CharactersDto editById(String id, CharactersDto charactersDto);
+    CharactersDto editById(String charactersId, CharactersDto charactersDto);
 
-    void deleteById(String id);
+    void deleteById(String charactersId);
 
     List<CharactersDto> getByFilters(String name, Integer age, List<String> films);
 }

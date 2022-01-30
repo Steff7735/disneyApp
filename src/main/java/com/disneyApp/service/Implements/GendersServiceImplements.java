@@ -1,8 +1,8 @@
 package com.disneyApp.service.Implements;
 
-import com.disneyApp.DTO.GendersDto;
+import com.disneyApp.Dto.GendersDto;
 import com.disneyApp.entity.Genders;
-import com.disneyApp.exception.NotFound;
+import com.disneyApp.exception.ParamNotFound;
 import com.disneyApp.mapper.GendersMapper;
 import com.disneyApp.repository.GendersRepository;
 import com.disneyApp.service.GendersService;
@@ -24,43 +24,43 @@ public class GendersServiceImplements implements GendersService {
     public GendersDto save(GendersDto gendersDto){
         Genders genders = gendersMapper.gendersDto2Entity(gendersDto);
         Genders savedGenders = gendersRepository.save(genders);
-        GendersDto resultDto = gendersMapper.genders2Dto(savedGenders,false);
+        GendersDto result = gendersMapper.genders2Dto(savedGenders,false);
 
-        return resultDto;
+        return result;
 
     }
 
     @Override
     public List<GendersDto> getAll() {
         List<Genders> genders = gendersRepository.findAll();
-        List<GendersDto> resultDto = this.gendersMapper.gendersList2DtoList(genders,false);
-        return resultDto;
+        List<GendersDto> listDto = this.gendersMapper.gendersList2DtoList(genders,false);
+        return listDto;
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(String gendersId) {
 
-        gendersRepository.deleteById(id);
+        gendersRepository.deleteById(gendersId);
     }
 
     @Override
-    public GendersDto editById(String id, GendersDto gendersDto) {
-        Genders savedGenders = this.handleById(id);
-        savedGenders.setNombre(savedGenders.getNombre());
-        savedGenders.setImagen(savedGenders.getImagen());
-        savedGenders.setFilmsAsoc(savedGenders.getFilmsAsoc());
-        Genders editedGenders  = gendersRepository.save(savedGenders);
-        GendersDto resultDto = gendersMapper.genders2Dto(editedGenders,false);
+    public GendersDto editById(String gendersId, GendersDto gendersDto) {
+        Genders genders = this.handleById(gendersId);
+        genders.setName(gendersDto.getName());
+        genders.setImage(gendersDto.getImage());
+        genders.setFilmsA(gendersDto.getFilmsA());
+        Genders editedGenders  = gendersRepository.save(genders);
+        GendersDto editDto = gendersMapper.genders2Dto(editedGenders,false);
 
-        return resultDto;
+        return editDto;
 
     }
 
     @Override
-    public Genders handleById(String id) {
-        Optional<Genders> found = gendersRepository.findById(id);
+    public Genders handleById(String gendersId) {
+        Optional<Genders> found = gendersRepository.findById(gendersId);
         if (!found.isPresent()) {
-            throw new NotFound("No Genders for id: " + id);
+            throw new ParamNotFound("No Genders for id: " + gendersId);
         }
         return found.get();
     }

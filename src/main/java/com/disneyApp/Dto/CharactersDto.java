@@ -1,4 +1,4 @@
-package com.disneyApp.DTO;
+package com.disneyApp.Dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,9 @@ public class CharactersDto {
 
     private String history;
 
-    private String filmsAsoc;
+    private String filmsA;
 
-    private List<FilmsDto> characters;
+    private List<FilmsDto> filmsDto;
+
+
 }

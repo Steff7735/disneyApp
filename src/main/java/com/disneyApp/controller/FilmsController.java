@@ -1,6 +1,6 @@
 package com.disneyApp.controller;
 
-import com.disneyApp.DTO.FilmsDto;
+import com.disneyApp.Dto.FilmsDto;
 import com.disneyApp.service.FilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+
 @RequestMapping("films")
+@RestController
 public class FilmsController {
 
     @Autowired
@@ -18,14 +19,14 @@ public class FilmsController {
 
     @GetMapping
     public ResponseEntity<List<FilmsDto>> getAll(){
-        List<FilmsDto> films = filmsService.getAll();
-        return ResponseEntity.ok().body(films);
+        List<FilmsDto> filmsDto = filmsService.getAll();
+        return ResponseEntity.ok().body(filmsDto);
     }
 
     @GetMapping("/films/{id}")
     public ResponseEntity<FilmsDto> getFilmsById(@PathVariable String id){
-        FilmsDto films = filmsService.getDetails(id);
-        return ResponseEntity.status(HttpStatus.OK).body(films);
+        FilmsDto filmsDto = filmsService.getDetails(id);
+        return ResponseEntity.status(HttpStatus.OK).body(filmsDto);
     }
 
 
@@ -36,9 +37,9 @@ public class FilmsController {
 
     }
 
-    @PostMapping("/{id}/characters/{charactersId}")
-    public ResponseEntity<Void> addCharacters(@PathVariable String id, @PathVariable String charactersId){
-        filmsService.addCharacters(id, charactersId);
+    @PostMapping("/{filmsId}/characters/{charactersId}")
+    public ResponseEntity<Void> addCharacters(@PathVariable String filmsId, @PathVariable String charactersId){
+        filmsService.addCharacters(filmsId, charactersId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -49,9 +50,9 @@ public class FilmsController {
     }
 
  
-    @PutMapping("/{id}")
-    public ResponseEntity<FilmsDto> editFilms(@PathVariable String id, @RequestBody FilmsDto filmsDto){
-        FilmsDto editedFilms = filmsService.editById(id, filmsDto);
+    @PutMapping("/{filmsId}")
+    public ResponseEntity<FilmsDto> editFilms(@PathVariable String filmsId, @RequestBody FilmsDto filmsDto){
+        FilmsDto editedFilms = filmsService.editById(filmsId, filmsDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedFilms);
     }
 
@@ -67,9 +68,9 @@ public class FilmsController {
     public ResponseEntity<List<FilmsDto>> getByFilters(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) List<String> genders,
-            @RequestParam(required = false, defaultValue = "ASC") Integer order
+            @RequestParam(required = false, defaultValue = "ASC") String order
     ){
-        List<FilmsDto> filteredFilms = filmsService.getByFilters(title, genders, order);
+        List<FilmsDto> filteredFilms = filmsService.getByFilters(title, genders, Integer.valueOf(order));
         return ResponseEntity.status(HttpStatus.OK).body(filteredFilms);
     }
 }

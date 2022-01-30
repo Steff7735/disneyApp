@@ -1,34 +1,21 @@
 package com.disneyApp.entity;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-/**
- *
- * @author fanny
- */
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name ="films")
-@SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
-@Where(clause = "deleted = false")
+@Table(name = "films")
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE films SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Films {
 
     @Id
@@ -44,49 +31,48 @@ public class Films {
 
     private Integer stars;
 
-   private boolean deleted = Boolean.FALSE;
-
-
-     @ManyToMany(
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE,
-            },fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "genders_films",
-            joinColumns = @JoinColumn(name = "genders_id"),
-            inverseJoinColumns = @JoinColumn(name = "films_id"))
-   
-     private List<Genders> filmsGenders = new ArrayList<>();
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToMany(
             cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            },fetch = FetchType.LAZY)
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+            }, fetch = FetchType.LAZY)
     @JoinTable(
             name = "films_characters",
-            joinColumns = @JoinColumn(name = "films_id"),
-            inverseJoinColumns = @JoinColumn(name = "characters_id"))
+            joinColumns= @JoinColumn(name = "films_id"),
+            inverseJoinColumns = @JoinColumn(name = "character_id"))
+    
+    private List<Characters> characters = new ArrayList<>();
 
-    private List<Characters> filmsCharacters = new ArrayList<>();
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+            }, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "films_genders",
+            joinColumns= @JoinColumn(name = "films_id"),
+            inverseJoinColumns = @JoinColumn(name = "genders_id"))
+    
+    private List<Genders> genders = new ArrayList<>();
 
-    public void addCharactersToFilms(Characters charactersToBeAdded) {
-        this.filmsCharacters.add(charactersToBeAdded);
+    public void addCharacters(Characters addCharacters) {
+
+        this.characters.add(addCharacters);
     }
 
-    public void removeCharactersFromFilms(Characters charactersToBeRemoved) {
-        this.filmsCharacters.remove(charactersToBeRemoved);
+    public void addGenders(Genders addGenders) {
+
+        this.genders.add(addGenders);
+    }
+    public void removeCharacters(Characters charactersToBeRemoved) {
+
+        this.characters.remove(charactersToBeRemoved);
+    }
+    public void removeGenders(Genders gendersToBeRemoved) {
+
+        this.genders.remove(gendersToBeRemoved);
     }
 
-
-    public void addGendersToFilms(Genders gendersToBeAdded) {
-
-        this.filmsGenders.add(gendersToBeAdded);
-    }
-
-    public void removeGendersFromFilms(Genders gendersToBeRemoved) {
-
-        this.filmsGenders.remove(gendersToBeRemoved);
-    }
 }

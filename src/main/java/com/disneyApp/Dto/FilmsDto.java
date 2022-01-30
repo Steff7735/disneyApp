@@ -1,4 +1,4 @@
-package com.disneyApp.DTO;
+package com.disneyApp.Dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class FilmsDto {
 
     private Integer stars;
 
-    private List<GendersDto> genders ;
+    private List<CharactersDto> charactersDto ;
 
-    private List<CharactersDto> characters;
+    private List<GendersDto> gendersDto;
 }

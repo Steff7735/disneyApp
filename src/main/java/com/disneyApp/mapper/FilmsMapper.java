@@ -1,6 +1,6 @@
 package com.disneyApp.mapper;
 
-import com.disneyApp.DTO.FilmsDto;
+import com.disneyApp.Dto.FilmsDto;
 import com.disneyApp.entity.Films;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;

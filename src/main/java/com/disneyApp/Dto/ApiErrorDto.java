@@ -1,4 +1,4 @@
-package com.disneyApp.DTO;
+package com.disneyApp.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

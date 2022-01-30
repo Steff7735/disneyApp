@@ -1,6 +1,6 @@
 package com.disneyApp.repository.specification;
 
-import com.disneyApp.DTO.filters.FilmsFiltersDto;
+import com.disneyApp.Dto.filters.FilmsFiltersDto;
 import com.disneyApp.entity.Films;
 import com.disneyApp.entity.Genders;
 import org.springframework.data.jpa.domain.Specification;
@@ -36,7 +36,7 @@ public class FilmsSpecification {
 
 
             if(!CollectionUtils.isEmpty(filmsFiltersDto.getGenders())) {
-                Join<Films, Genders> join = root.join("filmsGenders", JoinType.INNER);
+                Join<Films, Genders> join = root.join("genders", JoinType.INNER);
                 Expression<String> gendersId = join.get("id");
                 predicates.add(gendersId.in(filmsFiltersDto.getGenders()));
             }

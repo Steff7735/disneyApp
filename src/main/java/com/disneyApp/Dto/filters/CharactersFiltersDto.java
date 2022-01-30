@@ -1,4 +1,4 @@
-package com.disneyApp.DTO.filters;
+package com.disneyApp.Dto.filters;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

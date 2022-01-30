@@ -1,7 +1,7 @@
 package com.disneyApp.controller;
 
-import com.disneyApp.DTO.ApiErrorDto;
-import com.disneyApp.exception.NotFound;
+import com.disneyApp.Dto.ApiErrorDto;
+import com.disneyApp.exception.ParamNotFound;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import java.util.Arrays;
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-        @ExceptionHandler(value = {NotFound.class})
+        @ExceptionHandler(value = {ParamNotFound.class})
         protected ResponseEntity<Object> handleNotFound(RuntimeException ex, WebRequest request) {
-            // Instanciamos y construimos una DTO
+            // Instanciamos y construimos una Dto
             ApiErrorDto errorDTO = new ApiErrorDto (HttpStatus.BAD_REQUEST, ex.getMessage(), Arrays.asList("Param Not Found"));
             return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
         }

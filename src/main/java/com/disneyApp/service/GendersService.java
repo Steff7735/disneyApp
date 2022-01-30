@@ -1,6 +1,6 @@
 package com.disneyApp.service;
 
-import com.disneyApp.DTO.GendersDto;
+import com.disneyApp.Dto.GendersDto;
 import com.disneyApp.entity.Genders;
 
 import java.util.List;
@@ -11,9 +11,9 @@ public interface GendersService {
 
     List<GendersDto> getAll();
 
-    void deleteById(String id);
+    void deleteById(String gendersId);
 
-    GendersDto editById(String id, GendersDto gendersDto);
+    GendersDto editById(String gendersId, GendersDto gendersDto);
 
-    Genders handleById(String id);
+    Genders handleById(String gendersId);
 }

@@ -1,7 +1,8 @@
 package com.disneyApp.repository;
 
-import com.disneyApp.entity.Characters;
 import java.util.List;
+
+import com.disneyApp.entity.Characters;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

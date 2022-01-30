@@ -1,7 +1,7 @@
 package com.disneyApp.controller;
 
 
-import com.disneyApp.DTO.GendersDto;
+import com.disneyApp.Dto.GendersDto;
 import com.disneyApp.service.GendersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,30 +10,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping
+
 @RestController("genders")
+@RequestMapping
 public class GendersController {
 
     @Autowired
     private GendersService gendersService;
 
-    @GetMapping
-    public ResponseEntity<List<GendersDto>> getAll(){
-        List<GendersDto> genders = this.gendersService.getAll();
-        return ResponseEntity.ok().body(genders);
-    }
-
-
     @PostMapping
-    public ResponseEntity<GendersDto> save (@RequestBody GendersDto genders){
+    public ResponseEntity<GendersDto> save(@RequestBody GendersDto genders){
         GendersDto gendersSaved = gendersService.save(genders);
         return ResponseEntity.status(HttpStatus.CREATED).body(gendersSaved);
 
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<GendersDto>> getAll(){
+        List<GendersDto> genders = gendersService.getAll();
+        return ResponseEntity.ok().body(genders);
+    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GendersDto> editGenders(@PathVariable String id, @RequestBody GendersDto gendersToEdit){
-        GendersDto editedGenders = gendersService.editById(id, gendersToEdit);
+    public ResponseEntity<GendersDto> editGenders(@PathVariable String id, @RequestBody GendersDto gendersDto){
+        GendersDto editedGenders = gendersService.editById(id, gendersDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedGenders);
     }
 
