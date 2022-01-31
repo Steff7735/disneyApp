@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@RequestMapping("/films")
+@RequestMapping("films")
 @RestController
 public class FilmsController {
 
@@ -31,8 +31,8 @@ public class FilmsController {
 
 
     @PostMapping
-    public ResponseEntity<FilmsDto> save(@RequestBody FilmsDto filmsDto){
-        FilmsDto filmsSaved = filmsService.save(filmsDto);
+    public ResponseEntity<FilmsDto> save(@RequestBody FilmsDto films){
+        FilmsDto filmsSaved = filmsService.save(films);
         return ResponseEntity.status(HttpStatus.CREATED).body(filmsSaved);
 
     }
